@@ -17,7 +17,17 @@ class Contributor {
 
     @Override
     public String toString() {
-        return login + " (" + contributions + ")";
+        return login + " (" + contributions + ")" + "\n";
+    }
+
+    public char[] getLogin() {
+        return login.toCharArray();
+
+    }
+
+    public int getContributions() {
+        return contributions;
+
     }
 }
 
