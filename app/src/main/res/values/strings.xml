@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Git1</string>
+    <string name="pr1">Задание 1</string>
+    <string name="pr2">Задание 2</string>
+    <string name="pr3">Задание 3</string>
+    <string name="pr4">Задание 4</string>
+    <string name="empty"> </string>
+
 </resources>
