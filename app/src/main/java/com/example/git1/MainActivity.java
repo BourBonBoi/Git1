@@ -2,11 +2,14 @@ package com.example.git1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,11 +25,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextViewSecond;
     private TextView mTextView;
 
+    private TextInputEditText takeName;
 
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        takeName = (TextInputEditText) findViewById(R.id.takeName);
+
         mTextView = (TextView) findViewById(R.id.textViewMain);
         mTextViewSecond = (TextView) findViewById(R.id.textViewContributions);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         GitHubServicePr2 gitHubService = GitHubServicePr2.retrofit.create(GitHubServicePr2.class);
         final Call<User> call =
-                gitHubService.getUser("alexanderklimov");
+                gitHubService.getUser(takeName.getText().toString());
 
         call.enqueue(new Callback<User>() {
             @Override
@@ -101,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void onClickPr3(View view) {
+    public void onClickPr3(View view){
         mTextView.setText("");
         mTextViewSecond.setText("");
         mProgressBar.setVisibility(View.VISIBLE);
         GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
 
-        final Call<List<Repos>> call = gitHubService.getRepos("alexanderklimov");
+        final Call<List<Repos>> call = gitHubService.getRepos(takeName.getText().toString());
 
         call.enqueue(new Callback<List<Repos>>() {
                          @Override
@@ -115,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                              // response.isSuccessfull() is true if the response code is 2xx
                              if (response.isSuccessful()) {
                                  // Выводим массив имён
-                                 mTextView.setText(response.body().toString() + "\n");
                                  for (int i = 0; i < response.body().size(); i++) {
                                      // Выводим имена по отдельности
                                      mTextView.append(response.body().get(i).getName() + "\n");
@@ -151,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         GitHubServicePr4 gitHubService = GitHubServicePr4.retrofit.create(GitHubServicePr4.class);
         // часть слова
         final Call<GitResult> call =
-                gitHubService.getUsers("alexanderklim");
+                gitHubService.getUsers(takeName.getText().toString());
 
         call.enqueue(new Callback<GitResult>() {
             @Override
